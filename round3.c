@@ -134,3 +134,44 @@ int is_in_array_2d(const int num, const int size, int array[][size]) {
     }
     return 0; // Number not found
 }
+
+
+#include <stdio.h>
+#include <string.h>
+
+int longest_row(const int rows, const int cols, char array[rows][cols]) {
+    if (array == NULL || rows <= 0 || cols <= 0) {
+        return -1; // Повертаємо -1, якщо вхідні дані некоректні
+    }
+
+    int max_length = 0; // Максимальна довжина рядка
+    int longest_index = -1; // Індекс найдовшого рядка
+    int duplicate = 0; // Прапорець для перевірки однакової довжини
+
+    for (int i = 0; i < rows; i++) {
+        int current_length = strlen(array[i]);
+        if (current_length > max_length) {
+            max_length = current_length;
+            longest_index = i;
+            duplicate = 0; // Скидаємо прапорець
+        } else if (current_length == max_length) {
+            duplicate = 1; // Знаходимо ще один рядок тієї ж довжини
+        }
+    }
+
+    return (duplicate == 1) ? -1 : longest_index; // Якщо є дублікати, повертаємо -1
+}
+
+int main() {
+    // Тестовий приклад
+    char array[4][300] = {
+        "colleagues",
+        "colleagues",
+        "Dobru novinu povie",
+        "Hello"
+    };
+
+    printf("%d\n", longest_row(4, 300, array)); // Очікуваний результат: 2
+
+    return 0;
+}
